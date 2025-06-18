@@ -1,17 +1,29 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Context Menu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Context Menu on Button</title>
   <style>
-    body {
+    body, html {
       margin: 0;
       padding: 0;
-      font-family: sans-serif;
-      height: 100vh;
-      background: #f4f4f4;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+    }
+
+    #myButton {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
     .context-menu {
@@ -19,21 +31,20 @@
       display: none;
       background-color: #fff;
       border: 1px solid #ccc;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      width: 180px;
       border-radius: 6px;
-      overflow: hidden;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+      width: 160px;
+      z-index: 1000;
     }
 
     .context-menu ul {
       list-style: none;
-      margin: 0;
       padding: 0;
+      margin: 0;
     }
 
     .context-menu li {
-      padding: 10px 15px;
+      padding: 12px 16px;
       cursor: pointer;
       transition: background 0.3s;
     }
@@ -45,34 +56,42 @@
   </style>
 </head>
 <body>
-  <h2 style="text-align:center; margin-top: 40px;">Right Click Anywhere</h2>
+
+  <button id="myButton">Right Click Me</button>
 
   <div class="context-menu" id="contextMenu">
     <ul>
       <li onclick="menuAction('Copy')">Copy</li>
-      <li onclick="menuAction('Paste')">Paste</li>
-      <li onclick="menuAction('Reload')">Reload</li>
-      <li onclick="menuAction('Inspect')">Inspect</li>
+      <li onclick="menuAction('Delete')">Delete</li>
+      <li onclick="menuAction('Info')">Info</li>
     </ul>
   </div>
 
   <script>
-    const contextMenu = document.getElementById('contextMenu');
+    const button = document.getElementById("myButton");
+    const contextMenu = document.getElementById("contextMenu");
 
-    window.addEventListener('contextmenu', function (e) {
+    button.addEventListener("contextmenu", (e) => {
       e.preventDefault();
-      contextMenu.style.top = `${e.clientY}px`;
-      contextMenu.style.left = `${e.clientX}px`;
-      contextMenu.style.display = 'block';
+
+      const rect = button.getBoundingClientRect();
+      const menuX = rect.left + rect.width / 2;
+      const menuY = rect.top + rect.height;
+
+      contextMenu.style.top = `${menuY}px`;
+      contextMenu.style.left = `${menuX - 80}px`; // center align
+      contextMenu.style.display = "block";
     });
 
-    window.addEventListener('click', function () {
-      contextMenu.style.display = 'none';
+    window.addEventListener("click", () => {
+      contextMenu.style.display = "none";
     });
 
     function menuAction(action) {
       alert(`${action} clicked`);
     }
   </script>
+
 </body>
 </html>
+
