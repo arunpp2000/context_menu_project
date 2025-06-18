@@ -1,1 +1,78 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Context Menu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      height: 100vh;
+      background: #f4f4f4;
+    }
+
+    .context-menu {
+      position: absolute;
+      display: none;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      width: 180px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .context-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .context-menu li {
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .context-menu li:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center; margin-top: 40px;">Right Click Anywhere</h2>
+
+  <div class="context-menu" id="contextMenu">
+    <ul>
+      <li onclick="menuAction('Copy')">Copy</li>
+      <li onclick="menuAction('Paste')">Paste</li>
+      <li onclick="menuAction('Reload')">Reload</li>
+      <li onclick="menuAction('Inspect')">Inspect</li>
+    </ul>
+  </div>
+
+  <script>
+    const contextMenu = document.getElementById('contextMenu');
+
+    window.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.style.display = 'block';
+    });
+
+    window.addEventListener('click', function () {
+      contextMenu.style.display = 'none';
+    });
+
+    function menuAction(action) {
+      alert(`${action} clicked`);
+    }
+  </script>
+</body>
+</html>
